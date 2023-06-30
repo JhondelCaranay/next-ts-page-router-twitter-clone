@@ -7,7 +7,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <div className="h-screen bg-black text-white">
-      <div className="container mx-auto h-full max-w-6xl xl:px-32">
+      <div className="container mx-auto h-full max-w-7xl xl:px-32">
         <div className="grid h-full grid-cols-4">
           <SideBar />
           <div className="col-span-3 border-x border-neutral-800 lg:col-span-2">
