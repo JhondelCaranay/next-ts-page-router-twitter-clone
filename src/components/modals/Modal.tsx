@@ -1,6 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useCallback, useEffect } from "react";
-import Button from "../Button";
+import Button from "../forms/Button";
 
 type Props = {
   isOpen?: boolean;

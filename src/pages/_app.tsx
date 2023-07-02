@@ -1,5 +1,6 @@
 import useKeyEvent from "@/components/hooks/useKeyEvent";
 import Layout from "@/components/layout/Layout";
+import LoginModal from "@/components/modals/LoginModal";
 import Modal from "@/components/modals/Modal";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <LoginModal />
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
