@@ -1,16 +1,19 @@
-import useLoginModal from "@/hooks/zustand/useLoginModal";
 import { useCallback, useState } from "react";
 import Input from "../forms/Input";
 import Modal from "./Modal";
 import useRegisternModal from "@/hooks/zustand/useRegisterModal";
+import useLoginModal from "@/hooks/zustand/useLoginModal";
 
 type Props = {};
-const LoginModal = (props: Props) => {
+const RegisterModal = (props: Props) => {
   const loginModal = useLoginModal();
   const registerModal = useRegisternModal();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [name, setName] = useState<string>("");
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onSubmit = useCallback(async () => {
@@ -19,35 +22,53 @@ const LoginModal = (props: Props) => {
       //wait for 1 second
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // todo: add login
+      // todo: add register and login
 
-      loginModal.onClose();
+      setIsLoading(false);
+
+      registerModal.onClose();
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal]);
+  }, [email, password, registerModal, username, name]);
 
   const onToggle = useCallback(() => {
-    loginModal.onClose();
-    registerModal.onOpen();
-  }, [loginModal, registerModal]);
+    if (isLoading) {
+      return;
+    }
+
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [loginModal, registerModal, isLoading]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
         disabled={isLoading}
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <Input
+        disabled={isLoading}
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <Input
+        disabled={isLoading}
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <Input
+        disabled={isLoading}
         placeholder="Password"
         type="password"
-        onChange={(e) => setPassword(e.target.value)}
         value={password}
-        disabled={isLoading}
+        onChange={(e) => setPassword(e.target.value)}
       />
     </div>
   );
@@ -55,17 +76,17 @@ const LoginModal = (props: Props) => {
   const footerContent = (
     <div className="mt-4 text-center text-neutral-400">
       <p>
-        First time using Twitter?
+        Already have an account?
         <span
           onClick={onToggle}
           className="
             cursor-pointer 
             pl-1 
             text-white
-            hover:underline
+            hover:underline 
           "
         >
-          Create an account
+          Sign in
         </span>
       </p>
     </div>
@@ -74,8 +95,8 @@ const LoginModal = (props: Props) => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={loginModal.isOpen}
-      onClose={loginModal.onClose}
+      isOpen={registerModal.isOpen}
+      onClose={registerModal.onClose}
       title="Login"
       actionLabel="Sign in"
       onSubmit={onSubmit}
@@ -84,4 +105,4 @@ const LoginModal = (props: Props) => {
     />
   );
 };
-export default LoginModal;
+export default RegisterModal;
