@@ -6,13 +6,16 @@ import RegisterModal from "@/components/modals/RegisterModal";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isOpen, setIsOpen] = useState(false);
   useKeyEvent({ setIsOpen });
 
   return (
-    <>
+    <SessionProvider session={pageProps.session}>
+      <Toaster />
       <LoginModal />
       <RegisterModal />
       <Modal
@@ -25,6 +28,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </SessionProvider>
   );
 }

@@ -3,6 +3,8 @@ import { useCallback, useState } from "react";
 import Input from "../forms/Input";
 import Modal from "./Modal";
 import useRegisternModal from "@/hooks/zustand/useRegisterModal";
+import { signIn } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 type Props = {};
 const LoginModal = (props: Props) => {
@@ -19,15 +21,21 @@ const LoginModal = (props: Props) => {
       //wait for 1 second
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // todo: add login
+      await signIn("credentials", {
+        email,
+        password,
+      });
+
+      toast.success("Logged in");
 
       loginModal.onClose();
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal]);
+  }, [loginModal, email, password]);
 
   const onToggle = useCallback(() => {
     loginModal.onClose();

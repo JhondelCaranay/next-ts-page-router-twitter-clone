@@ -3,8 +3,14 @@ import Input from "../forms/Input";
 import Modal from "./Modal";
 import useRegisternModal from "@/hooks/zustand/useRegisterModal";
 import useLoginModal from "@/hooks/zustand/useLoginModal";
+import useSWRMutation from "swr/mutation";
+import axios from "axios";
+import registerUser from "@/libs/swr/registerUser";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 type Props = {};
+
 const RegisterModal = (props: Props) => {
   const loginModal = useLoginModal();
   const registerModal = useRegisternModal();
@@ -16,19 +22,37 @@ const RegisterModal = (props: Props) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { trigger } = useSWRMutation("/api/register", registerUser);
+
   const onSubmit = useCallback(async () => {
+    // validate if empty
+    if (!email || !username || !name) {
+      toast.error("Please fill all fields");
+      return;
+    }
+
     try {
       setIsLoading(true);
       //wait for 1 second
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // todo: add register and login
+      await trigger({ email, password, username, name });
+      console.log("run after trigger");
 
       setIsLoading(false);
+
+      toast.success("Account created.");
+
+      signIn("credentials", {
+        email,
+        password,
+      });
 
       registerModal.onClose();
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -97,8 +121,8 @@ const RegisterModal = (props: Props) => {
       disabled={isLoading}
       isOpen={registerModal.isOpen}
       onClose={registerModal.onClose}
-      title="Login"
-      actionLabel="Sign in"
+      title="Create an account"
+      actionLabel="Register"
       onSubmit={onSubmit}
       body={bodyContent}
       footer={footerContent}
