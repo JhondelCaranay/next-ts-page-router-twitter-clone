@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Modal from "./Modal";
 import Input from "../forms/Input";
+import ImageUpload from "../forms/ImageUpload";
 
 type Props = {};
 const EditModal = (props: Props) => {
@@ -74,6 +75,19 @@ const EditModal = (props: Props) => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
+      <ImageUpload
+        value={profileImage}
+        disabled={isLoading}
+        onChange={(image) => setProfileImage(image)}
+        label="Upload profile image"
+      />
+      <ImageUpload
+        value={coverImage}
+        disabled={isLoading}
+        onChange={(image) => setCoverImage(image)}
+        label="Upload cover image"
+      />
+
       <Input
         placeholder="Name"
         onChange={(e) => setName(e.target.value)}
