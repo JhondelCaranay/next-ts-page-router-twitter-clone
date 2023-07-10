@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { format } from "date-fns";
 import Button from "../forms/Button";
 import { BiCalendar } from "react-icons/bi";
+import useEditModal from "@/hooks/zustand/useEditModal";
 
 type Props = {
   userId: string;
@@ -12,7 +13,7 @@ const UserBio = ({ userId }: Props) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(userId);
 
-  // const editModal = useEditModal();
+  const editModal = useEditModal();
 
   // const { isFollowing, toggleFollow } = useFollow(userId);
 
@@ -28,7 +29,7 @@ const UserBio = ({ userId }: Props) => {
     <div className="border-b-[1px] border-neutral-800 pb-4">
       <div className="flex justify-end p-2">
         {currentUser?.id === userId ? (
-          <Button secondary label="Edit" onClick={() => {}} />
+          <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
           <Button
             onClick={() => {}}

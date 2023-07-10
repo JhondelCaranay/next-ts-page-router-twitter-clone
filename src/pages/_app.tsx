@@ -8,6 +8,7 @@ import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
+import EditModal from "@/components/modals/EditModal";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Toaster />
       <LoginModal />
       <RegisterModal />
+      <EditModal />
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
