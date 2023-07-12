@@ -1,7 +1,18 @@
+import usePosts from "@/hooks/swr/usePosts";
+import PostItem from "./PostItem";
+
 type Props = {
-  userId: string;
+  userId?: string;
 };
-const PostFeed = (props: Props) => {
-  return <div>PostFeed</div>;
+const PostFeed = ({ userId }: Props) => {
+  const { data: posts = [] } = usePosts(userId);
+
+  return (
+    <>
+      {posts.map((post: Record<string, any>) => (
+        <PostItem userId={userId} key={post.id} data={post} />
+      ))}
+    </>
+  );
 };
 export default PostFeed;
