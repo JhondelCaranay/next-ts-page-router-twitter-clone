@@ -48,7 +48,7 @@ const SideBar = (props: Props) => {
   }, [items]);
 
   return (
-    <div className="col-span-1 h-full bg-slate-900 pr-4 md:pr-6">
+    <div className="h-ful col-span-1 pr-4 md:pr-6">
       <div className="flex flex-col items-end">
         <div className="space-y-2 lg:w-[230px]">
           <SideBarLogo />

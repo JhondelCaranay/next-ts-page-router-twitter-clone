@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import Avatar from "../Avatar";
+import useLike from "@/hooks/swr/useLike";
 
 type Props = {
   data: Record<string, any>;
@@ -15,7 +16,7 @@ const PostItem = ({ data, userId }: Props) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  // const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
+  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
 
   const goToUser = useCallback(
     (ev: any) => {
@@ -37,9 +38,9 @@ const PostItem = ({ data, userId }: Props) => {
         return loginModal.onOpen();
       }
 
-      // toggleLike();
+      toggleLike();
     },
-    [loginModal, currentUser]
+    [loginModal, currentUser, toggleLike]
   );
 
   const LikeIcon = true ? AiFillHeart : AiOutlineHeart;
@@ -124,7 +125,7 @@ const PostItem = ({ data, userId }: Props) => {
                 hover:text-red-500
             "
             >
-              <LikeIcon color={true ? "red" : ""} size={20} />
+              <LikeIcon color={hasLiked ? "red" : ""} size={20} />
               <p>{data.likedIds.length}</p>
             </div>
           </div>
