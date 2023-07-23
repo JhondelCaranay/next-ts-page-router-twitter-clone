@@ -24,6 +24,7 @@ const SideBar = (props: Props) => {
       label: "Notifications",
       href: "/notifications",
       auth: true,
+      alert: currentUser?.hasNotification || false,
     },
     {
       icon: FaUser,
@@ -42,6 +43,7 @@ const SideBar = (props: Props) => {
           label={item.label}
           icon={item.icon}
           auth={item.auth}
+          alert={item.alert}
         />
       );
     });
