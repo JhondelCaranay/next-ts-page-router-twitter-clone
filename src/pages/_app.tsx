@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import EditModal from "@/components/modals/EditModal";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <SessionProvider session={pageProps.session}>
+      <Head>
+        <title>CloneApp</title>
+      </Head>
       <Toaster />
       <LoginModal />
       <RegisterModal />

@@ -63,7 +63,7 @@ const LoginModal = (props: Props) => {
   const footerContent = (
     <div className="mt-4 text-center text-neutral-400">
       <p>
-        First time using Twitter?
+        First time using App?
         <span
           onClick={onToggle}
           className="

@@ -92,7 +92,7 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
       ) : (
         <div className="py-8">
           <h1 className="mb-4 text-center text-2xl font-bold text-white">
-            Welcome to Twitter
+            Welcome to App
           </h1>
           <div className="flex flex-row items-center justify-center gap-4">
             <Button label="Login" onClick={loginModal.onOpen} />
